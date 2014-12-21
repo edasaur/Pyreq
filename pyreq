@@ -15,8 +15,9 @@ do
 	do
 		if echo $line | tr "\n" " " | grep -q "import"
 			then
-				$line | tr "\n" " "
+				replace=" "
+				result="${line/\n/$replace}"
+				echo $result
 		fi
 	done < $file
-	echo '\n'
 done
