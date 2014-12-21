@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo "My first bash command"
+
+#wget https://bootstrap.pypa.io/get-pip.py
+
+#python get-pip.py
+
+#rm get-pip.py
+
+for file in $1/*.py
+do
+	echo $file
+	while read line
+	do
+		if echo $line | tr "\n" " " | grep -q "import"
+			then
+				$line | tr "\n" " "
+		fi
+	done < $file
+	echo '\n'
+done
