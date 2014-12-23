@@ -6,19 +6,31 @@
 #python get-pip.py
 
 #rm get-pip.py
-
+filename=`date '+%y_%m_%d'`
+filename="temp$filename"
+touch $filename
 for file in $1/*.py
 do
 	echo $file
 	while read line
 	do
 		if echo $line | tr "\n" " " | grep -q "import"
+		then
+			replacement=""
+			replace="\n"
+			result=$(echo $line | sed 's/\n/$replacement/g')
+			if [[ $result =~ .*"from".* ]]
 			then
-				replacement=""
-				replace="\n"
-				result=$(echo $line | sed 's/\n/$replacement/g')
-				echo $result | sed -n 's/.*from \([a-zA-Z]*\) .*/\1/p'
-				echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'
+				echo $result | sed -n 's/.*from \([a-zA-Z]*\) .*/\1/p' >> $filename
+			else
+				echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p' >> $filename
+			fi
 		fi
 	done < $file
 done
+
+while read line
+do
+	sudo pip install $line
+done < $filename
+
