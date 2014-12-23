@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "My first bash command"
 
 #wget https://bootstrap.pypa.io/get-pip.py
 
@@ -15,9 +14,11 @@ do
 	do
 		if echo $line | tr "\n" " " | grep -q "import"
 			then
-				replace=" "
-				result="${line/\n/$replace}"
-				echo $result
+				replacement=""
+				replace="\n"
+				result=$(echo $line | sed 's/\n/$replacement/g')
+				echo $result | sed -n 's/.*from \([a-zA-Z]*\) .*/\1/p'
+				echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'
 		fi
 	done < $file
 done
