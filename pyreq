@@ -24,7 +24,7 @@ do
 			else
 				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 			fi
-			if 
+			if #no requirements file
 			then
 				sudo pip install $module
 				echo $module >> $filename
