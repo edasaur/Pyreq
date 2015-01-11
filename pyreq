@@ -10,6 +10,7 @@ filename="temp$filename"
 touch $filename
 for file in $1/*.py
 do
+	echo $file
 	while read line
 	do
 		if echo $line | tr "\n" " " | grep -q "import"
@@ -23,7 +24,7 @@ do
 			else
 				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 			fi
-			if [ ! -f ./requirements.txt ] #no requirements file
+			if #no requirements file
 			then
 				sudo pip install $module
 				echo $module >> $filename
