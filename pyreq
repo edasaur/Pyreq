@@ -1,14 +1,14 @@
 #!/bin/bash
 
+#making sure that pip is installed
 #wget https://bootstrap.pypa.io/get-pip.py
-
 #python get-pip.py
-
 #rm get-pip.py
+
 filename=`date '+%y_%m_%d'`
 filename="temp$filename"
 touch $filename
-for file in $1/*.py
+for file in `find $1 -name "*.py"`
 do
 	echo $file
 	while read line
@@ -24,15 +24,8 @@ do
 			else
 				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 			fi
-			if 
-			then
-				sudo pip install $module
-				echo $module >> $filename
-			fi
+			sudo pip install $module
+			echo $module >> $filename
 		fi
 	done < $file
 done
-
-
-
-
