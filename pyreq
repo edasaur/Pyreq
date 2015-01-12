@@ -5,6 +5,10 @@
 #python get-pip.py
 #rm get-pip.py
 
+#creating temporary environment
+echo `which virtualenvwrapper.sh` 
+mkvirtualenv temp
+echo "after"
 filename=`date '+%y_%m_%d'`
 filename="temp$filename"
 touch $filename
@@ -24,7 +28,7 @@ do
 			else
 				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 			fi
-			sudo pip install $module
+			pip install $module
 			echo $module >> $filename
 		fi
 	done < $file

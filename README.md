@@ -1,7 +1,7 @@
 Pyreq
 =====
 
-This is a small lightweight tool that will allow users to import all python modules that they need, in order to run third-party source code. 
+Pyreq is a small lightweight tool that will allow users to create a virtual environment to install all the dependencies they need, in order to run third-party source code. 
 
 Some of the functionality should include:
 
