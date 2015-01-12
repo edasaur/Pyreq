@@ -1,17 +1,32 @@
 #!/bin/bash
 
+
+DIR=$1
+REQ="requirements.txt"
+echo $DIR | grep -qE "/$"
+if [ $? -eq 0 ]
+then
+	echo "ends in /"
+else
+	echo "nope"
+fi
 #making sure that pip is installed
 #wget https://bootstrap.pypa.io/get-pip.py
 #python get-pip.py
 #rm get-pip.py
 
 #creating temporary environment
-echo `which virtualenvwrapper.sh` 
 mkvirtualenv temp
-echo "after"
+#if [ -f $1.txt ];
+#then
+#   echo "File $FILE exists."
+#else
+#   echo "File $FILE does not exist."
+#fi
 filename=`date '+%y_%m_%d'`
 filename="temp$filename"
 touch $filename
+
 for file in `find $1 -name "*.py"`
 do
 	echo $file
@@ -28,7 +43,7 @@ do
 			else
 				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 			fi
-			pip install $module
+			pip install $module #sudo not needed because virtual env.
 			echo $module >> $filename
 		fi
 	done < $file
