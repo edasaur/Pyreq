@@ -3,12 +3,13 @@
 
 DIR=$1
 REQ="requirements.txt"
+SLASH="/"
 echo $DIR | grep -qE "/$"
 if [ $? -eq 0 ]
 then
-	echo "ends in /"
+	DIR=$DIR
 else
-	echo "nope"
+	DIR=$DIR$SLASH
 fi
 #making sure that pip is installed
 #wget https://bootstrap.pypa.io/get-pip.py
@@ -17,34 +18,33 @@ fi
 
 #creating temporary environment
 mkvirtualenv temp
-#if [ -f $1.txt ];
-#then
-#   echo "File $FILE exists."
-#else
-#   echo "File $FILE does not exist."
-#fi
-filename=`date '+%y_%m_%d'`
-filename="temp$filename"
-touch $filename
-
-for file in `find $1 -name "*.py"`
-do
-	echo $file
-	while read line
+if [ -f $DIR$REQ ];
+then
+	pip install -r $DIR$REQ
+else
+	filename=`date '+%y_%m_%d'`
+	filename="temp$filename"
+	touch $filename
+	
+	for file in `find $DIR -name "*.py"`
 	do
-		if echo $line | tr "\n" " " | grep -q "import"
-		then
-			replacement=""
-			replace="\n"
-			result=$(echo $line | sed 's/\n/$replacement/g')
-			if [[ $result =~ .*"from".* ]]
+		echo $file
+		while read line
+		do
+			if echo $line | tr "\n" " " | grep -q "import"
 			then
-				module=`echo $result | sed -n 's/.*from \([a-zA-Z]*\) .*/\1/p'`
-			else
-				module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
+				replacement=""
+				replace="\n"
+				result=$(echo $line | sed 's/\n/$replacement/g')
+				if [[ $result =~ .*"from".* ]]
+				then
+					module=`echo $result | sed -n 's/.*from \([a-zA-Z]*\) .*/\1/p'`
+				else
+					module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
+				fi
+				pip install $module #sudo not needed because virtual env.
+				echo $module >> $filename
 			fi
-			pip install $module #sudo not needed because virtual env.
-			echo $module >> $filename
-		fi
-	done < $file
-done
+		done < $file
+	done
+fi
