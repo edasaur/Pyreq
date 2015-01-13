@@ -5,8 +5,11 @@ tmpvirtualenv is a small and easy-to-use lightweight tool that allows users to c
 
 ##Example Use
 To create a virtual environment and work on it:
+```
 	tmpvirtualenv directoryOfSourceCode
+```
 To percolate a module:
+```
 	tmpvirtualenv -p package1 [package2 package3...]
-
+```
 
