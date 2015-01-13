@@ -1,9 +1,14 @@
 #!/bin/bash
-if [ $1=="-p" ]
+if [ "$1" == "-p" ]
 then
 	if [ -z $2 ]
 	then
-		echo "time to percolate all modules"	
+		for file in `pip freeze`
+		do
+		        rawr=`echo $file | grep -o '[A-Za-z_0-9]*=='`
+	        	len=`expr ${#rawr} - 2`
+	        	#sudo pip install ${rawr:0:$len}
+		done
 	else
 		echo "percolating a selection of modules"
 	fi
@@ -19,7 +24,6 @@ then
 	else
 		DIR=$DIR$SLASH
 	fi
-	
 	
 	#creating temporary environment
 	mkvirtualenv temp
