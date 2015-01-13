@@ -10,7 +10,12 @@ then
 	        	#sudo pip install ${rawr:0:$len}
 		done
 	else
-		echo "percolating a selection of modules"
+		shift
+		while test ${#} -gt 0
+		do
+			sudo pip install $1
+			shift
+		done
 	fi
 elif [ -d $1 ]
 then
@@ -31,10 +36,6 @@ then
 	then
 		pip install -r $DIR$REQ
 	else
-		filename=`date '+%y_%m_%d'`
-		filename="temp$filename"
-		touch $filename
-		
 		for file in `find $DIR -name "*.py"`
 		do
 			echo $file
@@ -52,7 +53,6 @@ then
 						module=`echo $result | sed -n 's/.*import \([a-zA-Z]*\).*/\1/p'`
 					fi
 					pip install $module #sudo not needed because virtual env.
-					echo $module >> $filename
 				fi
 			done < $file
 		done
