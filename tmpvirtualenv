@@ -38,6 +38,7 @@ then
 	
 	#creating temporary environment
 	mkvirtualenv temp
+	workon temp
 	if [ -f $DIR$REQ ];
 	then
 		pip install -r $DIR$REQ
