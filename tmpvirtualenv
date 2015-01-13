@@ -1,7 +1,13 @@
 #!/bin/bash
-if [ "$1" == "-p" ]
+
+virtualenv=`whereis virtualenvwrapper.sh`
+virtualenv=${virtualenv:19}
+
+source $virtualenv 
+
+if [ "$1" == "-p" ] #checks for flag
 then
-	if [ -z $2 ]
+	if [ -z $2 ] 
 	then
 		for file in `pip freeze`
 		do
@@ -19,7 +25,7 @@ then
 	fi
 elif [ -d $1 ]
 then
-	DIR=$1
+	DIR=`pwd`"/"$1
 	REQ="requirements.txt"
 	SLASH="/"
 	echo $DIR | grep -qE "/$"
