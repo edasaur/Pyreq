@@ -13,14 +13,24 @@ then
 		do
 		        rawr=`echo $file | grep -o '[A-Za-z_0-9]*=='`
 	        	len=`expr ${#rawr} - 2`
-	        	#sudo pip install ${rawr:0:$len}
+	        	sudo pip install ${rawr:0:$len}
 		done
 	else
 		shift
 		while test ${#} -gt 0
 		do
-			sudo pip install $1
-			shift
+			if [ "$1" == "*" ]
+			then
+				for file in `pip freeze`
+        		        do
+		                        rawr=`echo $file | grep -o '[A-Za-z_0-9]*=='`
+		                        len=`expr ${#rawr} - 2`
+		                        sudo pip install ${rawr:0:$len}
+		                done	
+			else
+				sudo pip install $1
+				shift
+			fi
 		done
 	fi
 elif [ -d $1 ]
