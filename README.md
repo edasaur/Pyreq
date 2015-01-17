@@ -11,13 +11,13 @@ To create a virtual environment and work on it:
 ```
 	tmpvirtualenv directoryOfSourceCode
 ```
-To percolate a module:
+To move a module to shell level:
 ```
 	tmpvirtualenv -p package1 [package2 package3...]
 ```
 
 ##Installation
-Merely fork this repository to download and move the tmpvirtualenv file to wherever your virtualenvwrapper.sh file is.
+Merely fork this repository to download and move the tmpvirtualenv file to /usr/bin/
 
 ##License
 The MIT License (MIT)
