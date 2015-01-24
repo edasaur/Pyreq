@@ -11,8 +11,8 @@ then
 	then
 		for file in `pip freeze`
 		do
-		        rawr=`echo $file | grep -o '[A-Za-z_0-9]*=='`
-	        	len=`expr ${#rawr} - 2`
+		        module=`echo $file | grep -o '[A-Za-z_0-9]*=='`
+	        	len=`expr ${#module} - 2`
 	        	sudo pip install ${rawr:0:$len}
 		done
 	else
@@ -23,9 +23,9 @@ then
 			then
 				for file in `pip freeze`
         		        do
-		                        rawr=`echo $file | grep -o '[A-Za-z_0-9]*=='`
-		                        len=`expr ${#rawr} - 2`
-		                        sudo pip install ${rawr:0:$len}
+		                        module=`echo $file | grep -o '[A-Za-z_0-9]*=='`
+		                        len=`expr ${#module} - 2`
+		                        sudo pip install ${module:0:$len}
 		                done	
 			else
 				sudo pip install $1
